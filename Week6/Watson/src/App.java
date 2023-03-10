@@ -72,7 +72,6 @@ public class App {
             }
             bufferredReader.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return wordList;
@@ -110,7 +109,6 @@ public class App {
             fileWriter.append(builder.toString());
             fileWriter.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         for (String keyWord: wordCounter.keySet()) {
@@ -135,7 +133,6 @@ public class App {
             fileWriter.append(builder.toString());
             fileWriter.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         for (WordFrequency wordFrequency: wordCounter) {
@@ -160,7 +157,6 @@ public class App {
             fileWriter.append(builder.toString());
             fileWriter.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         for (String keyWord: wordCounter.keySet()) {
@@ -185,7 +181,6 @@ public class App {
             fileWriter.append(builder.toString());
             fileWriter.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         for (ParagraphFrequency wordFrequency: wordCounter) {

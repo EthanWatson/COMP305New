@@ -22,7 +22,6 @@ public class ParagraphFrequency implements Comparable<ParagraphFrequency> {
     /** Override the toString method to reference the parent object */ 
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
         return super.toString();
     }
 
