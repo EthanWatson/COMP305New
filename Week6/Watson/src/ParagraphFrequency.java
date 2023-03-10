@@ -1,10 +1,10 @@
-// Step 8
+// Step 17
 /** Represents a word and it's word count */
-public class WordFrequency implements Comparable<WordFrequency> {
+public class ParagraphFrequency implements Comparable<ParagraphFrequency> {
     String word;
     int wordCount;
 
-    public WordFrequency(String passedWord, int passedWordCount) {
+    public ParagraphFrequency(String passedWord, int passedWordCount) {
         this.word = passedWord;
         this.wordCount = passedWordCount;
     }
@@ -27,21 +27,21 @@ public class WordFrequency implements Comparable<WordFrequency> {
     }
 
     
-    /** Override the compareTo method to return a value based on the frequency of this class's stored word compared to the otherWordFrequency
+    /** Override the compareTo method to return a value based on the frequency of this class's stored word compared to the otherParagraphFrequency
      * return 1 for higher
      * return -1 for lower
      * return 0 for equal
      * return 2 for other
      */
     @Override
-    public int compareTo(WordFrequency otherWordFrequency) {
+    public int compareTo(ParagraphFrequency otherParagraphFrequency) {
         int frequencyValue = 2;
 
-        if (this.wordCount > otherWordFrequency.wordCount)
+        if (this.wordCount > otherParagraphFrequency.wordCount)
             frequencyValue = 1;
-        if (this.wordCount < otherWordFrequency.wordCount)
+        if (this.wordCount < otherParagraphFrequency.wordCount)
             frequencyValue = -1;
-        if (this.wordCount == otherWordFrequency.wordCount)
+        if (this.wordCount == otherParagraphFrequency.wordCount)
             frequencyValue = 0;
         
         return frequencyValue;
