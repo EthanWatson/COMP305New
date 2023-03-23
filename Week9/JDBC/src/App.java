@@ -37,10 +37,38 @@ public class App {
         }
 
         //Languages
-        System.out.println("Printing Languages")
+        System.out.println("Printing Languages");
         for(Language language: languageList) {
             System.out.println(language);
         }
+
+        //Insert
+        // City insertCity = new City();
+        // insertCity.setCountryCode("CAN");
+        // insertCity.setDistrict("Kings");
+        // insertCity.setName("Kingston");
+        // insertCity.setPopulation(136685);
+
+        // cityDao.insert(insertCity);
+
+        //findById
+        City city = new City();
+        city = cityDao.findById(4080);
+        System.out.println("City returned from findById (4087): " + city);
+
+        //Update
+        city.setPopulation(10000);
+        Boolean success = cityDao.update(city);
+        System.out.println("City after the update: " + cityDao.findById(4087));
+
+        //Delete
+        cityDao.delete(4080);
+
+
+
+
+
+
         
         // ResultSet resultSet = statement.executeQuery("SELECT * FROM country");
 
@@ -56,3 +84,5 @@ public class App {
     }
     }
 }
+
+
