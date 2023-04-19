@@ -19,7 +19,7 @@ public class CountryDao implements Dao<Country, String> {
     }
 
     /** 
-     * Returns a list of all rows in country table
+     * Returns a list of country objects filled with data from all rows in country table
      */
     public List<Country> findAll() {
         List<Country> countries = new ArrayList<>();
@@ -55,33 +55,51 @@ public class CountryDao implements Dao<Country, String> {
         return countries;
     }
 
+    /**
+     * Returns a country object filled with data from country table row that has the matching passed primary key
+     */
     public Country findById(String pk) {
-        return null;
+        Country country = new Country();
+        String select = "SELECT * FROM country WHERE Code=?";
+
+        try (PreparedStatement ps = connection.prepareStatement(select);) {
+            ps.setString(1, pk);
+            ResultSet result = ps.executeQuery();
+
+            if (result.next()) {
+                country.setCode(result.getString("Code"));
+                country.setName(result.getString("Name"));
+                country.setContinent(result.getString("Continent"));
+                country.setRegion(result.getString("Region"));
+                country.setSurfaceArea(result.getFloat("SurfaceArea"));
+                country.setIndepYear(result.getInt("IndepYear"));
+                country.setPopulation(result.getInt("Population"));
+                country.setLifeExpectancy(result.getFloat("LifeExpectancy"));
+                country.setGNP(result.getFloat("GNP"));
+                country.setGNPOld(result.getFloat("GNPOld"));
+                country.setLocalName(result.getString("LocalName"));
+                country.setGovernmentForm(result.getString("GovernmentForm"));
+                country.setHeadOfState(result.getString("HeadOfState"));
+                country.setCapital(result.getInt("Capital"));
+                country.setCode2(result.getString("Code2"));
+            }
+        } 
+        catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return country;
     }
 
-    String Code; //PK
-    String Name;
-    String Continent;
-    String Region;
-    float SurfaceArea;
-    int IndepYear;
-    int Population;
-    float LifeExpectancy;
-    float GNP;
-    float GNPOld;
-    String LocalName;
-    String GovernmentForm;
-    String HeadOfState;
-    int Capital;
-    String Code2;
-
-
+    /**
+     * inserts a row into the country table with the data stored in the passed country object
+     */
     public void insert(Country country) {
         try (Statement statement = connection.createStatement()) {
             String insert = "INSERT INTO country VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-            PreparedStatement ps = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, null);
+            PreparedStatement ps = connection.prepareStatement(insert);
+            ps.setString(1, country.getCode());
             ps.setString(2, country.getName());
             ps.setString(3, country.getContinent());
             ps.setString(4, country.getRegion());
@@ -98,27 +116,51 @@ public class CountryDao implements Dao<Country, String> {
             ps.setString(15, country.getCode2());
 
             ps.executeUpdate();
-
-            ResultSet keys = ps.getGeneratedKeys();
-            if(keys.next()) {
-                country.setCode(keys.getString(1));
-            }
-
-
         }
         catch (SQLException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    public Boolean update(Country item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    /**
+     * update the name column for the row in the country table with the matching primary key in the passed country object
+     */
+    public Boolean update(Country country) {
+        Boolean success = true;
+
+        String update = "UPDATE country SET Name=? WHERE Code=?";
+
+        try (PreparedStatement ps = connection.prepareStatement(update);) {
+            ps.setString(1, country.getName());
+            ps.setString(2, country.getCode());
+
+            ps.executeUpdate();
+        } 
+        catch (SQLException e) {
+            System.err.println(e.getMessage());
+            success = false;
+        }
+        return success;
     }
 
+    /**
+     * delete the row from the country table with the same primary key as the passed string
+     */
     public Boolean delete(String pk) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        Boolean success = false;
+        String delete = "DELETE FROM country WHERE Code=?";
+
+        try (PreparedStatement ps = connection.prepareStatement(delete)) {
+            ps.setString(1, pk);
+
+            if (ps.executeUpdate() != 0) {
+                success = true;
+            }
+        } 
+        catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return success;
     }
-    
 }

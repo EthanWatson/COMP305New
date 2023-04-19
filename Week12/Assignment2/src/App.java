@@ -15,68 +15,54 @@ import entities.Database;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        System.out.println("Hello, World!");
-
         List<Country> countryList;
-
-        // String url = "jdbc:mysql://localhost:3306/world";
-        // String user = "root";
-        // String password = "8064";
 
     try (Connection connection = Database.getDatabaseConnection();
         Statement statement = connection.createStatement();) {
 
+        //FindAll
         CountryDao countryDao = new CountryDao(connection);
         countryList = countryDao.findAll();
 
-        //Countries
         System.out.println("Printing Countries");
         for (Country country: countryList) {
             System.out.println(country);
         }
 
-
         //Insert
+        Country insertCountry = new Country();
+        insertCountry.setCode("OCT");
+        insertCountry.setName("1country");
+        insertCountry.setContinent("North America");
+        insertCountry.setRegion("North America");
+        insertCountry.setSurfaceArea(527529);
+        insertCountry.setIndepYear(2001);
+        insertCountry.setPopulation(528975);
+        insertCountry.setLifeExpectancy(74);
+        insertCountry.setGNP(34278);
+        insertCountry.setGNPOld(54325);
+        insertCountry.setLocalName("1country");
+        insertCountry.setGovernmentForm("Republic");
+        insertCountry.setHeadOfState("Elisabeth II");
+        insertCountry.setCapital(452);
+        insertCountry.setCode2("OC");
         
+        countryDao.insert(insertCountry);
 
-        //DISPLAY WHAT WAS INSERTED AFTER INSERTING
+        //FindById
+        Country country = new Country();
+        country = countryDao.findById("OCT");
+        System.out.println('\n' + "Country returned from findById (OCT): " + country + '\n');
 
-        //Insert
-        // City insertCity = new City();
-        // insertCity.setCountryCode("CAN");
-        // insertCity.setDistrict("Kings");
-        // insertCity.setName("Kingston");
-        // insertCity.setPopulation(136685);
+        //Update
+        country.setName("2country");
+        Boolean success = countryDao.update(country);
+        if (success) {
+            System.out.println("Country after update: " + countryDao.findById("OCT"));
+        }
 
-        // cityDao.insert(insertCity);
-
-        // //findById
-        // City city = new City();
-        // city = cityDao.findById(4080);
-        // System.out.println("City returned from findById (4087): " + city);
-
-        // //Update
-        // city.setPopulation(10000);
-        // Boolean success = cityDao.update(city);
-        // System.out.println("City after the update: " + cityDao.findById(4087));
-
-        // //Delete
-        // cityDao.delete(4080);
-
-
-
-
-
-
-        
-        // ResultSet resultSet = statement.executeQuery("SELECT * FROM country");
-
-        // while (resultSet.next()) {
-        //     System.out.println(resultSet.getString(2));
-        //     System.out.println(resultSet.getString("name"));
-        // }
-
-        // resultSet.close();
+        //Delete
+        countryDao.delete("OCT");
     }
     catch (SQLException ex) {
         System.err.println("Exception: " + ex.getMessage());
