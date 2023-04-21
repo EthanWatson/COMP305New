@@ -63,6 +63,39 @@ public class App {
 
         //Delete
         countryDao.delete("OCT");
+
+        //City FindByName
+        CityDao cityDao = new CityDao(connection);
+        City city = new City();
+        city = cityDao.findByName("Haag");
+        System.out.println('\n' + "City returned from findByName (Haag): " + city + '\n');
+
+        //City findByCountryCode
+        List<City> cityList2 = cityDao.findByCountryCode("ARG");
+
+        System.out.println("Printing cities with countryCode (ARG)");
+        for (City city2: cityList2) {
+            System.out.println(city2);
+        }
+
+        //City FindOver1MillionPopulation
+        List<City> cityList = cityDao.findOver1MillionPopulation();
+
+        System.out.println("\n" + "Printing cities over 1 million population: ");
+        for (City currentCity: cityList) {
+            System.out.println(currentCity);
+        }
+
+        //Country findByName
+        country = countryDao.findByName("Armenia");
+        System.out.println('\n' + "Country returned from findByName (Armenia): " + country + '\n');
+
+        //Country findByRegion
+        List<Country> countryList2 = countryDao.findByRegion("Caribbean");
+        System.out.println("Printing Countries in Caribbean region");
+        for (Country currentCountry: countryList2) {
+            System.out.println(currentCountry);
+        }
     }
     catch (SQLException ex) {
         System.err.println("Exception: " + ex.getMessage());
